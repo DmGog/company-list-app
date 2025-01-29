@@ -1,7 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { companiesSlice } from '@/entities';
 
-const reducer = combineReducers({});
+const reducer = combineReducers({
+  companies: companiesSlice.reducer,
+});
 
 export const store = configureStore({
   reducer,
