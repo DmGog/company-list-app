@@ -1,0 +1,21 @@
+.rowBody {
+  &.selected {
+    background-color: var(--color-light-900);
+  }
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+
+}
+
+.actionCellBody {
+  width: 110px;
+
+  .actionCell {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}

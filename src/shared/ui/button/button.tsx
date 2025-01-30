@@ -19,18 +19,19 @@ type Props = {
   onlyIcon?: boolean;
   iconVariant?: Icon;
   variant?: 'filled' | 'outlined';
-  onClick?: () => void;
+  onClick: () => void;
   title?: string;
+  disabled?: boolean;
 };
 
-export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', title }: Props) => {
+export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', title, disabled }: Props) => {
   const classNames = {
-    button: clsx(s.button, s[variant]),
+    button: clsx(s.button, s[variant], disabled && s.disabled),
     icon: clsx(onlyIcon && s.onlyIcon),
   };
 
   return (
-    <button className={clsx(classNames.button, classNames.icon)} onClick={onClick}>
+    <button className={clsx(classNames.button, classNames.icon)} onClick={onClick} disabled={disabled}>
       {onlyIcon && iconVariant && iconMap[iconVariant]}
       {title}
     </button>

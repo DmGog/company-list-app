@@ -15,47 +15,63 @@ export type Company = {
   selected: boolean;
 };
 
-const initialState: Company[] = [
-  { id: v4(), name: 'Компания A', address: { country: 'Россия', city: 'Москва', street: 'Тверская', houseNumber: '20A' }, selected: false },
-  {
-    id: v4(),
-    name: 'Компания B',
-    address: { country: 'Беларусь', city: 'Минск', street: 'Московская', houseNumber: '10A' },
-    selected: false,
-  },
-  {
-    id: v4(),
-    name: 'Компания C',
-    address: { country: 'Казахстан', city: 'Астана', street: 'Любимова', houseNumber: '40A' },
-    selected: false,
-  },
-];
+type CompaniesState = {
+  companies: Company[];
+  isEditingGlobal: boolean;
+};
+
+const initialState: CompaniesState = {
+  companies: [
+    {
+      id: v4(),
+      name: 'Компания A',
+      address: { country: 'Россия', city: 'Москва', street: 'Тверская', houseNumber: '20A' },
+      selected: false,
+    },
+    {
+      id: v4(),
+      name: 'Компания B',
+      address: { country: 'Беларусь', city: 'Минск', street: 'Московская', houseNumber: '10A' },
+      selected: false,
+    },
+    {
+      id: v4(),
+      name: 'Компания C',
+      address: { country: 'Казахстан', city: 'Астана', street: 'Любимова', houseNumber: '40A' },
+      selected: false,
+    },
+  ],
+  isEditingGlobal: false,
+};
 
 export const companiesSlice = createSlice({
   name: 'company',
   initialState: initialState,
   reducers: {
     toggleSelectCompany: (state, action: PayloadAction<string>) => {
-      const company = state.find(c => c.id === action.payload);
+      const company = state.companies.find(c => c.id === action.payload);
       if (company) {
         company.selected = !company.selected;
       }
     },
     toggleSelectAll: (state, action: PayloadAction<boolean>) => {
-      state.forEach(company => {
+      state.companies.forEach(company => {
         company.selected = action.payload;
       });
     },
     deleteCompanies: (state, action: PayloadAction<string[]>) => {
-      return state.filter(company => !action.payload.includes(company.id));
+      state.companies = state.companies.filter(company => !action.payload.includes(company.id));
     },
     updateCompany: (state, action: PayloadAction<{ id: string; name: string; address: Location }>) => {
-      const company = state.find(c => c.id === action.payload.id);
+      const company = state.companies.find(c => c.id === action.payload.id);
       if (company) {
         company.name = action.payload.name;
         company.address = action.payload.address;
       }
     },
+    toggleEditing: (state, action: PayloadAction<boolean>) => {
+      state.isEditingGlobal = action.payload;
+    },
   },
 });
-export const { toggleSelectCompany, toggleSelectAll, deleteCompanies, updateCompany } = companiesSlice.actions;
+export const { toggleSelectCompany, toggleSelectAll, deleteCompanies, updateCompany, toggleEditing } = companiesSlice.actions;

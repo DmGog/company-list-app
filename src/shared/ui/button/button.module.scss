@@ -6,6 +6,12 @@
     width: 24px;
     height: 24px;
   }
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.5;
+  }
 }
 
 .filled{
