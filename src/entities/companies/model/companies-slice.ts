@@ -15,7 +15,7 @@ type Company = {
 
 const initialState: Company[] = [
   { id: v4(), name: 'Компания A', address: { country: 'Россия', city: 'Москва' }, selected: false },
-  { id: v4(), name: 'Компания B', address: { country: 'Беларуссия', city: 'Минск' }, selected: false },
+  { id: v4(), name: 'Компания B', address: { country: 'Беларусь', city: 'Минск' }, selected: false },
   { id: v4(), name: 'Компания C', address: { country: 'Казахстан', city: 'Астана' }, selected: false },
 ];
 

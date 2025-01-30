@@ -115,6 +115,10 @@ legend {
 body {
   width: 100%;
   min-width: 360px;
+
   font-family: var(--font-family), sans-serif;
   font-weight: var(--font-weight-regular);
+  color: var(--color-light-100);
+
+  background-color: var(--color-light-700);
 }

@@ -1,11 +1,26 @@
-.table {
 
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  color: var(--color-light-100);
+  border: 1px solid var(--color-dark-500);
 }
 
 .headCell {
+  padding: 6px 24px;
+  font-weight: var(--font-weight-medium);
+  background-color: var(--color-dark-500);
 
+  > span {
+    user-select: none;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
 }
 
 .tableCell {
-
+  padding: 6px 24px;
+  background-color: var(--color-dark-300);
+  border-bottom: 1px solid var(--color-dark-500);
 }
