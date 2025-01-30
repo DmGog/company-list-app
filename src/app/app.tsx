@@ -5,7 +5,6 @@ import s from './app.module.scss';
 function App() {
   return (
     <div className={s.root}>
-      список компаний
       <CompaniesTable />
     </div>
   );

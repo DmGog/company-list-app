@@ -1,1 +1,1 @@
-export * from './companies-table';
+export * from './ui';
