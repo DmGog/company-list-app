@@ -1,8 +1,8 @@
 import { Indicator, Root } from '@radix-ui/react-checkbox';
 import s from './checkbox.module.scss';
-import { Check } from '@/shared/assets';
 import clsx from 'clsx';
 import * as Label from '@radix-ui/react-label';
+import CheckboxIcon from '@/shared/assets/icons/check.svg';
 
 type Props = {
   checked?: boolean;
@@ -13,10 +13,16 @@ type Props = {
 };
 
 export const Checkbox = ({ checked = false, disabled = false, label, onCheckedChange, ...props }: Props) => {
+  const classNames = {
+    label: clsx(s.label, disabled && s.disabled),
+    indicator: clsx(s.indicator, disabled && s.disabled),
+    checkboxWrapper: clsx(s.checkboxWrapper, disabled && s.disabled),
+  };
+
   return (
     <div className={s.container}>
-      <Label.Root className={clsx(s.label, disabled && s.disabled)}>
-        <div className={clsx(s.buttonWrapper, disabled && s.disabled)}>
+      <Label.Root className={classNames.label}>
+        <div className={classNames.checkboxWrapper}>
           <Root
             checked={checked}
             className={s.checkbox}
@@ -24,8 +30,8 @@ export const Checkbox = ({ checked = false, disabled = false, label, onCheckedCh
             onCheckedChange={value => onCheckedChange?.(!!value)}
             {...props}
           >
-            <Indicator className={clsx(s.indicator, disabled && s.disabled)}>
-              <Check fill={'black'} height={14} viewBox={'4 8 14 14'} width={14} />
+            <Indicator className={classNames.indicator}>
+              <CheckboxIcon />
             </Indicator>
           </Root>
         </div>

@@ -1,0 +1,39 @@
+
+.button {
+  cursor: pointer;
+
+  & svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.filled{
+  padding: 12px;
+  color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-500);
+  border-radius: 10px;
+}
+
+.onlyIcon {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+
+  & svg {
+    fill: var(--color-light-500);
+  }
+
+  &:hover {
+    width: 36px;
+    height: 36px;
+    background-color: var(--color-dark-300);
+    border-radius: 50%;
+  }
+
+  &:active {
+    & svg {
+      fill: var(--color-dark-100);
+    }
+  }
+}

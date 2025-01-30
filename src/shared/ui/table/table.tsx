@@ -20,8 +20,11 @@ export const TableBody = forwardRef<ElementRef<'tbody'>, ComponentPropsWithoutRe
 });
 
 TableBody.displayName = 'TableBody';
-export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(({ ...rest }, ref) => {
-  return <tr {...rest} ref={ref} />;
+export const TableRow = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(({ className, ...rest }, ref) => {
+  const classNames = {
+    tableRow: clsx(className, s.tableRow),
+  };
+  return <tr className={classNames.tableRow} {...rest} ref={ref} />;
 });
 
 TableRow.displayName = 'TableRow';
