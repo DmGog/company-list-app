@@ -20,10 +20,23 @@
 
 
 .filled {
-  padding: 12px;
-  color: var(--color-dark-500);
-  border: 1px solid var(--color-dark-500);
-  border-radius: 10px;
+  height: 36px;
+
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-light-100);
+
+  background-color: var(--color-light-900);
+  border-radius: 4px;
+
+  &:hover {
+    color: var(--color-accent-100);
+    background-color: var(--color-light-500);
+  }
+
+  &:active {
+    color: var(--color-dark-500);
+  }
 }
 
 .onlyIcon {
