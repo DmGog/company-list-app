@@ -48,6 +48,9 @@ export const companiesSlice = createSlice({
   name: 'company',
   initialState: initialState,
   reducers: {
+    addCompany(state, action: PayloadAction<Company>) {
+      state.companies.unshift(action.payload);
+    },
     toggleSelectCompany: (state, action: PayloadAction<string>) => {
       const company = state.companies.find(c => c.id === action.payload);
       if (company) {
@@ -74,4 +77,4 @@ export const companiesSlice = createSlice({
     },
   },
 });
-export const { toggleSelectCompany, toggleSelectAll, deleteCompanies, updateCompany, toggleEditing } = companiesSlice.actions;
+export const { toggleSelectCompany, toggleSelectAll, deleteCompanies, updateCompany, toggleEditing, addCompany } = companiesSlice.actions;
