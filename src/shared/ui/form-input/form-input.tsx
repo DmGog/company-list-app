@@ -1,5 +1,6 @@
 import { ChangeEvent, forwardRef, KeyboardEvent } from 'react';
 import s from './form-input.module.scss';
+import clsx from 'clsx';
 
 type Props = {
   name: string;
@@ -8,16 +9,21 @@ type Props = {
   error?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+  className?: string;
 };
 
-export const FormInput = forwardRef<HTMLInputElement, Props>(({ name, value, onChange, placeholder, error, onKeyDown }, ref) => {
+export const FormInput = forwardRef<HTMLInputElement, Props>(({ name, className, value, onChange, placeholder, error, onKeyDown }, ref) => {
+  const classNames = {
+    input: clsx(s.input, className),
+  };
+
   return (
     <div className={s.inputWrapper}>
       <input
         ref={ref}
         autoComplete="off"
         onKeyDown={onKeyDown}
-        className={s.input}
+        className={classNames.input}
         name={name}
         value={value}
         onChange={onChange}

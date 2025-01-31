@@ -1,9 +1,10 @@
 import clsx from 'clsx';
-import { Button, Checkbox, TableCell, TableRow } from '@/shared';
+import { Checkbox, FormInput, TableCell, TableRow } from '@/shared';
 import { Company, deleteCompanies, toggleEditing, toggleSelectCompany, updateCompany } from '@/entities';
 import s from './company-row.module.scss';
 import { KeyboardEvent, RefObject, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '@/app/store';
+import { CompanyRowActions } from '@/widgets';
 
 type Props = {
   company: Company;
@@ -54,7 +55,12 @@ export const CompanyRow = ({ company, disabled }: Props) => {
         updateCompany({
           id: editingCompanyId,
           name: editedName,
-          address: { country: editedCountry, city: editedCity, street: editedStreet, houseNumber: editedHouseNumber },
+          address: {
+            country: editedCountry,
+            city: editedCity,
+            street: editedStreet,
+            houseNumber: editedHouseNumber,
+          },
         }),
       );
       setEditingCompanyId(null);
@@ -88,7 +94,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
 
   const classNames = {
     rowBody: clsx(s.rowBody, company.selected && s.selected),
-    editInput: clsx(s.editInput, error && s.error),
+    editInput: clsx(error && s.error),
   };
 
   return (
@@ -98,13 +104,14 @@ export const CompanyRow = ({ company, disabled }: Props) => {
       </TableCell>
       <TableCell>
         {isEditing ? (
-          <input
+          <FormInput
             className={classNames.editInput}
             ref={nameRef}
+            name={editedName}
             value={editedName}
+            placeholder={'Введите компанию'}
             onChange={e => setEditedName(e.target.value)}
             onKeyDown={e => handleKeyDown(e, countryRef)}
-            placeholder="Введите компанию"
           />
         ) : (
           company.name
@@ -112,58 +119,57 @@ export const CompanyRow = ({ company, disabled }: Props) => {
       </TableCell>
       <TableCell>
         {isEditing ? (
-          <>
-            <input
+          <div className={s.editAddressCell}>
+            <FormInput
               className={classNames.editInput}
               ref={countryRef}
+              name={editedCountry}
               value={editedCountry}
+              placeholder="Введите страну"
               onChange={e => setEditedCountry(e.target.value)}
               onKeyDown={e => handleKeyDown(e, cityRef)}
-              placeholder="Введите страну"
             />
-            <input
+            <FormInput
               className={classNames.editInput}
               ref={cityRef}
+              name={editedCity}
               value={editedCity}
+              placeholder="Введите город"
               onChange={e => setEditedCity(e.target.value)}
               onKeyDown={e => handleKeyDown(e, streetRef)}
-              placeholder="Введите город"
             />
-            <input
+            <FormInput
               className={classNames.editInput}
               ref={streetRef}
+              name={editedStreet}
               value={editedStreet}
+              placeholder="Введите улицу"
               onChange={e => setEditedStreet(e.target.value)}
               onKeyDown={e => handleKeyDown(e, houseNumberRef)}
-              placeholder="Введите улицу"
             />
-            <input
+            <FormInput
               className={classNames.editInput}
               ref={houseNumberRef}
+              name={editedHouseNumber}
               value={editedHouseNumber}
+              placeholder="Введите дом"
               onChange={e => setEditedHouseNumber(e.target.value)}
               onKeyDown={e => handleKeyDown(e)}
-              placeholder="Введите дом"
             />
-          </>
+          </div>
         ) : (
           `${company.address.country}, ${company.address.city}, ${company.address.street} ${company.address.houseNumber}`
         )}
       </TableCell>
       <TableCell className={s.actionCellBody}>
-        <div className={s.actionCell}>
-          {isEditing ? (
-            <>
-              <Button onlyIcon iconVariant="done" onClick={handleSaveEdit} />
-              <Button onlyIcon iconVariant="cancel" onClick={handleCancelEdit} />
-            </>
-          ) : (
-            <>
-              <Button onlyIcon iconVariant="delete" onClick={handleDeleteCompany(company.id)} disabled={disabled} />
-              <Button onlyIcon iconVariant="edit" onClick={() => handleEditCompany(company)} disabled={disabled} />
-            </>
-          )}
-        </div>
+        <CompanyRowActions
+          isEditing={isEditing}
+          disabled={disabled}
+          onSaveEdit={handleSaveEdit}
+          onCancelEdit={handleCancelEdit}
+          onDelete={handleDeleteCompany(company.id)}
+          onEdit={() => handleEditCompany(company)}
+        />
       </TableCell>
     </TableRow>
   );
