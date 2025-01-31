@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 } from 'uuid';
 
-type Location = {
+export type Location = {
   country: string;
   city: string;
   street: string;

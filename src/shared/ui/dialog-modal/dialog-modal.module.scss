@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 12px 24px;
+  padding: 12px 20px;
 
   border-bottom: 1px solid var(--color-dark-100);
 }
@@ -53,5 +53,5 @@
 }
 
 .title {
-  margin: 0;
+  font-size: var(--font-size-l);
 }
