@@ -22,11 +22,12 @@ type Props = {
   onClick: () => void;
   title?: string;
   disabled?: boolean;
+  className?: string;
 };
 
-export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', title, disabled }: Props) => {
+export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', title, disabled, className }: Props) => {
   const classNames = {
-    button: clsx(s.button, s[variant], disabled && s.disabled),
+    button: clsx(s.button, s[variant], disabled && s.disabled, className),
     icon: clsx(onlyIcon && s.onlyIcon),
   };
 

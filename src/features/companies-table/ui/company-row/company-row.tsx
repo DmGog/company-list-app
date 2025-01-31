@@ -86,14 +86,20 @@ export const CompanyRow = ({ company, disabled }: Props) => {
 
   const isEditing = editingCompanyId === company.id;
 
+  const classNames = {
+    rowBody: clsx(s.rowBody, company.selected && s.selected),
+    editInput: clsx(s.editInput, error && s.error),
+  };
+
   return (
-    <TableRow key={company.id} className={clsx(s.rowBody, company.selected && s.selected)}>
+    <TableRow key={company.id} className={classNames.rowBody}>
       <TableCell>
-        <Checkbox checked={company.selected} onCheckedChange={handleSelectCompany(company.id)} disabled={disabled} />
+        <Checkbox checked={company.selected} onCheckedChange={handleSelectCompany(company.id)} disabled={disabled && !editingCompanyId} />
       </TableCell>
       <TableCell>
         {isEditing ? (
           <input
+            className={classNames.editInput}
             ref={nameRef}
             value={editedName}
             onChange={e => setEditedName(e.target.value)}
@@ -108,6 +114,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
         {isEditing ? (
           <>
             <input
+              className={classNames.editInput}
               ref={countryRef}
               value={editedCountry}
               onChange={e => setEditedCountry(e.target.value)}
@@ -115,6 +122,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
               placeholder="Введите страну"
             />
             <input
+              className={classNames.editInput}
               ref={cityRef}
               value={editedCity}
               onChange={e => setEditedCity(e.target.value)}
@@ -122,6 +130,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
               placeholder="Введите город"
             />
             <input
+              className={classNames.editInput}
               ref={streetRef}
               value={editedStreet}
               onChange={e => setEditedStreet(e.target.value)}
@@ -129,6 +138,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
               placeholder="Введите улицу"
             />
             <input
+              className={classNames.editInput}
               ref={houseNumberRef}
               value={editedHouseNumber}
               onChange={e => setEditedHouseNumber(e.target.value)}
