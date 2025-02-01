@@ -28,6 +28,7 @@ export const FormInput = forwardRef<HTMLInputElement, Props>(({ name, className,
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        maxLength={40}
       />
       {error && <span className={s.error}>{error}</span>}
     </div>

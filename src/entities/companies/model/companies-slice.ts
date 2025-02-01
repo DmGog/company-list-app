@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { v4 } from 'uuid';
+import { companiesData } from '../mock-data-companies';
 
 export type Location = {
   country: string;
@@ -21,26 +21,7 @@ type CompaniesState = {
 };
 
 const initialState: CompaniesState = {
-  companies: [
-    {
-      id: v4(),
-      name: 'Компания A',
-      address: { country: 'Россия', city: 'Москва', street: 'Тверская', houseNumber: '20A' },
-      selected: false,
-    },
-    {
-      id: v4(),
-      name: 'Компания B',
-      address: { country: 'Беларусь', city: 'Минск', street: 'Московская', houseNumber: '10A' },
-      selected: false,
-    },
-    {
-      id: v4(),
-      name: 'Компания C',
-      address: { country: 'Казахстан', city: 'Астана', street: 'Любимова', houseNumber: '40A' },
-      selected: false,
-    },
-  ],
+  companies: companiesData,
   isEditingGlobal: false,
 };
 
