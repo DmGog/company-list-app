@@ -3,6 +3,10 @@
     background-color: var(--color-light-900);
   }
 
+  &.editingRow {
+    background-color: var(--color-accent-900);
+  }
+
   &:hover {
     background-color: var(--color-dark-100);
   }

@@ -2,8 +2,7 @@ import clsx from 'clsx';
 import { Checkbox, FormInput, TableCell, TableRow } from '@/shared';
 import { Company, deleteCompanies, toggleEditing, toggleSelectCompany, updateCompany } from '@/entities';
 import s from './company-row.module.scss';
-import { KeyboardEvent, useEffect, useState } from 'react';
-import { useAppDispatch } from '@/app/store';
+import { useEffect, useState } from 'react';
 import { CompanyRowActions } from '@/widgets';
 import { useCompanyForm } from '@/features/hooks';
 
@@ -15,16 +14,24 @@ type Props = {
 };
 
 export const CompanyRow = ({ company, disabled }: Props) => {
-  const dispatch = useAppDispatch();
-  const { formFields, inputRefs, form, errors, validateForm, handleChange, resetForm } = useCompanyForm();
-
+  const { formFields, dispatch, handleKeyDown, inputRefs, form, errors, validateForm, handleChange, resetForm } = useCompanyForm();
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null);
 
   useEffect(() => {
+    let timer: number | undefined;
+
     if (editingCompanyId) {
-      inputRefs[0]?.current?.focus();
+      timer = window.setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 0);
     }
-  }, [editingCompanyId]);
+
+    return () => {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    };
+  }, [editingCompanyId, inputRefs]);
 
   const handleEditCompany = (company: Company) => {
     setEditingCompanyId(company.id);
@@ -61,13 +68,6 @@ export const CompanyRow = ({ company, disabled }: Props) => {
     resetForm();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'Enter' && inputRefs[index + 1]) {
-      e.preventDefault();
-      inputRefs[index + 1]?.current?.focus();
-    }
-  };
-
   const handleSelectCompany = (id: string) => () => {
     dispatch(toggleSelectCompany(id));
   };
@@ -79,7 +79,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
   const isEditing = editingCompanyId === company.id;
 
   const classNames = {
-    rowBody: clsx(s.rowBody, company.selected && s.selected),
+    rowBody: clsx(s.rowBody, company.selected && s.selected, isEditing && s.editingRow),
     editInput: clsx(errors && s.error),
   };
 
@@ -92,12 +92,12 @@ export const CompanyRow = ({ company, disabled }: Props) => {
         {isEditing ? (
           <FormInput
             className={classNames.editInput}
-            ref={inputRefs[0]}
+            ref={el => (inputRefs.current[0] = el)}
             value={form.name}
             onChange={e => handleChange('name', e.target.value)}
             onKeyDown={e => handleKeyDown(e, 0)}
-            placeholder="Введите компанию"
-            name="company"
+            placeholder="Название компании"
+            name="name"
           />
         ) : (
           company.name
@@ -112,7 +112,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
                 name={name}
                 placeholder={placeholder}
                 className={classNames.editInput}
-                ref={inputRefs[index + 1]}
+                ref={el => (inputRefs.current[index + 1] = el)}
                 value={form[name]}
                 onChange={e => handleChange(name, e.target.value)}
                 onKeyDown={e => handleKeyDown(e, index + 1)}

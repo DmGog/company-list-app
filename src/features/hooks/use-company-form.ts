@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, KeyboardEvent } from 'react';
 import { useAppDispatch } from '@/app/store';
 
 type FormState = Record<string, string>;
@@ -8,19 +8,21 @@ type FormField = {
   name: string;
   placeholder: string;
 };
+
 const formFields: FormField[] = [
-  { id: '1', name: 'name', placeholder: 'Введите компанию' },
-  { id: '2', name: 'country', placeholder: 'Введите страну' },
-  { id: '3', name: 'city', placeholder: 'Введите город' },
-  { id: '4', name: 'street', placeholder: 'Введите улицу' },
-  { id: '5', name: 'houseNumber', placeholder: 'Введите номер дома' },
+  { id: '1', name: 'name', placeholder: 'Название компании' },
+  { id: '2', name: 'country', placeholder: 'Страна' },
+  { id: '3', name: 'city', placeholder: 'Город' },
+  { id: '4', name: 'street', placeholder: 'Улица' },
+  { id: '5', name: 'houseNumber', placeholder: 'Дом' },
 ];
 
 export const useCompanyForm = () => {
   const [form, setForm] = useState<FormState>(() => Object.fromEntries(formFields.map(field => [field.name, ''])));
   const [errors, setErrors] = useState<Partial<FormState>>({});
-  const inputRefs = formFields.map(() => useRef<HTMLInputElement | null>(null));
+  const inputRefs = useRef<Array<HTMLInputElement | null>>(Array(formFields.length).fill(null));
   const dispatch = useAppDispatch();
+
   const validateForm = (): boolean => {
     const newErrors = Object.fromEntries(Object.entries(form).map(([key, value]) => [key, value.trim() ? '' : 'Заполните поле']));
     setErrors(newErrors);
@@ -37,5 +39,14 @@ export const useCompanyForm = () => {
     setErrors({});
   };
 
-  return { form, errors, validateForm, handleChange, resetForm, inputRefs, formFields, dispatch };
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const nextInput = inputRefs.current[index + 1];
+      if (nextInput) {
+        nextInput.focus();
+      }
+    }
+  };
+  return { form, errors, validateForm, handleChange, resetForm, inputRefs, formFields, dispatch, handleKeyDown };
 };

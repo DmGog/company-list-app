@@ -1,5 +1,5 @@
 import { Button, DialogModal, FormInput } from '@/shared';
-import { KeyboardEvent } from 'react';
+import { useEffect } from 'react';
 import { addCompany } from '@/entities';
 import { v4 } from 'uuid';
 import s from './add-company-form.module.scss';
@@ -11,7 +11,23 @@ type Props = {
 };
 
 export const AddCompanyForm = ({ isOpen, onClose }: Props) => {
-  const { dispatch, form, errors, validateForm, handleChange, resetForm, inputRefs, formFields } = useCompanyForm();
+  const { dispatch, handleKeyDown, form, errors, validateForm, handleChange, resetForm, inputRefs, formFields } = useCompanyForm();
+
+  useEffect(() => {
+    let timer: number | undefined;
+
+    if (isOpen) {
+      timer = window.setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 0);
+    }
+
+    return () => {
+      if (timer !== undefined) {
+        clearTimeout(timer);
+      }
+    };
+  }, [isOpen, inputRefs]);
 
   const handleSubmit = () => {
     if (validateForm()) {
@@ -29,7 +45,6 @@ export const AddCompanyForm = ({ isOpen, onClose }: Props) => {
         }),
       );
       resetForm();
-      inputRefs[0]?.current?.focus();
     }
   };
 
@@ -38,26 +53,30 @@ export const AddCompanyForm = ({ isOpen, onClose }: Props) => {
     onClose();
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
-    if (e.key === 'Enter' && inputRefs[index + 1]) {
-      e.preventDefault();
-      inputRefs[index + 1]?.current?.focus();
-    }
-  };
-
   return (
     <DialogModal title="Добавить компанию" isOpen={isOpen} onClose={handleCancel}>
       <div className={s.modalContent}>
-        {formFields.map(({ id, name, placeholder }, index) => (
+        <h3 className={s.secondaryTitle}>Название компании</h3>
+        <FormInput
+          ref={el => (inputRefs.current[0] = el)}
+          error={errors['name']}
+          value={form.name}
+          onChange={e => handleChange('name', e.target.value)}
+          onKeyDown={e => handleKeyDown(e, 0)}
+          placeholder="Название компании"
+          name="name"
+        />
+        <h3 className={s.secondaryTitle}>Адрес компании</h3>
+        {formFields.slice(1).map(({ id, name, placeholder }, index) => (
           <FormInput
             key={id}
+            ref={el => (inputRefs.current[index + 1] = el)}
             name={name}
             value={form[name]}
             onChange={e => handleChange(name, e.target.value)}
             placeholder={placeholder}
             error={errors[name]}
-            ref={inputRefs[index]}
-            onKeyDown={e => handleKeyDown(e, index)}
+            onKeyDown={e => handleKeyDown(e, index + 1)}
           />
         ))}
         <Button onClick={handleSubmit} title="Добавить" variant="filled" />
