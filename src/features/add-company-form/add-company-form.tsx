@@ -45,6 +45,7 @@ export const AddCompanyForm = ({ isOpen, onClose }: Props) => {
         }),
       );
       resetForm();
+      inputRefs.current[0]?.focus();
     }
   };
 

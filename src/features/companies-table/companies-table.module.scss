@@ -1,5 +1,13 @@
 .companiesTable{
-  width: 100%;
+ display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.tableHead {
+  position: sticky;
+  z-index: 10;
+  top: 0;
 }
 
 .headCell {
@@ -17,6 +25,30 @@
   align-items: center;
 }
 
+.tableBody {
+  overflow-y: auto;
+  flex: 1;
+}
 
+.noScroll{
+  overflow: hidden;
+}
+
+
+.tableBody::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.tableBody::-webkit-scrollbar-thumb {
+  background-color: var(--color-light-100);
+  border: 3px solid var(--color-dark-100);
+  border-radius: 4px;
+}
+
+.tableBody::-webkit-scrollbar-track {
+  background-color: var(--color-dark-100);
+  border-bottom: 1px solid transparent;
+}
 
 
