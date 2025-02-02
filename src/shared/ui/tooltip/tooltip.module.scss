@@ -1,0 +1,104 @@
+.tooltipContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.Content {
+  will-change: transform, opacity;
+  user-select: none;
+
+  position: absolute;
+  z-index: 10;
+
+  padding: 10px 15px;
+
+  font-size: 15px;
+  line-height: 1;
+  color: var(--color-accent-500);
+  text-align: center;
+
+  opacity: 0;
+  background-color: var(--color-light-100);
+  border-radius: 4px;
+
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-delay: 1s;
+
+  &.top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: slideUpAndFade 1000ms forwards;
+  }
+
+  &.bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: slideDownAndFade 1000ms forwards;
+  }
+
+  &.left {
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    animation: slideLeftAndFade 1000ms forwards;
+  }
+
+  &.right {
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    animation: slideRightAndFade 1000ms forwards;
+  }
+}
+
+
+@keyframes slideUpAndFade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDownAndFade {
+  from {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    transform: translateX(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRightAndFade {
+  from {
+    transform: translateX(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

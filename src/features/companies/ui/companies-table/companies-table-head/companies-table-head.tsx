@@ -1,4 +1,4 @@
-import { TableHead, TableHeadCell, TableRow, Checkbox, Button } from '@/shared';
+import { TableHead, TableHeadCell, TableRow, Checkbox, Button, Tooltip } from '@/shared';
 import s from './companies-table-head.module.scss';
 
 type Props = {
@@ -23,8 +23,15 @@ export const CompaniesTableHeader = ({
       <TableRow>
         <TableHeadCell>
           <div className={s.actionHeadCell}>
-            <Checkbox checked={allSelected} onCheckedChange={onToggleSelectAll} disabled={isEditingGlobal || totalCompanies < 1} />
-            {selectedCompaniesCount > 0 && <Button iconVariant="delete" onlyIcon onClick={onDeleteSelected} disabled={isEditingGlobal} />}
+            <Tooltip content="Выделить все">
+              <Checkbox checked={allSelected} onCheckedChange={onToggleSelectAll} disabled={isEditingGlobal || totalCompanies < 1} />
+            </Tooltip>
+
+            {selectedCompaniesCount > 0 && (
+              <Tooltip content="Удалить выбранное">
+                <Button iconVariant="delete" onlyIcon onClick={onDeleteSelected} disabled={isEditingGlobal} />
+              </Tooltip>
+            )}
           </div>
         </TableHeadCell>
         <TableHeadCell>Название компании</TableHeadCell>
