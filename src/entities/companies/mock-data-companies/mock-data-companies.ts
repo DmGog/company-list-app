@@ -1,4 +1,4 @@
-import { Company } from '@/entities';
+import { Company } from '../model';
 import { v4 } from 'uuid';
 
 export const companiesData: Company[] = [

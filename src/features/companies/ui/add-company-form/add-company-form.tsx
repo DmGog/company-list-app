@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { addCompany } from '@/entities';
 import { v4 } from 'uuid';
 import s from './add-company-form.module.scss';
-import { useCompanyForm } from '../hooks';
+import { useCompanyForm } from '@/features/companies/hooks';
 
 type Props = {
   isOpen: boolean;

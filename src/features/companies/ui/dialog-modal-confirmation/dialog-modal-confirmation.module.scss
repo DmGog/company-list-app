@@ -1,0 +1,34 @@
+.modalContent{
+display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+
+  padding: 30px 20px;
+
+  .text{
+    font-size: var(--font-size-xl);
+    color: var(--color-light-700);
+  }
+}
+
+.buttonWrapper{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+
+  .btnYes, .btnNo{
+    width: 100px;
+  }
+
+  .btnYes{
+    color: var(--color-accent-900);
+  }
+
+  .btnNo{
+    color: var(--color-danger-700);
+  }
+}

@@ -1,26 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { companiesData } from '../mock-data-companies';
-
-export type Location = {
-  country: string;
-  city: string;
-  street: string;
-  houseNumber: string;
-};
-
-export type Company = {
-  id: string;
-  name: string;
-  address: Location;
-  selected: boolean;
-};
-
-type CompaniesState = {
-  companies: Company[];
-  displayedCompanies: Company[];
-  page: number;
-  isEditingGlobal: boolean;
-};
+import { CompaniesState, Company, Location } from './types';
 
 const initialState: CompaniesState = {
   companies: companiesData,
@@ -70,6 +50,15 @@ export const companiesSlice = createSlice({
     loadMoreCompanies(state) {
       const nextPage = state.page + 1;
       const newCompanies = state.companies.slice(0, nextPage * 15);
+
+      const selectedIds = new Set(state.displayedCompanies.filter(c => c.selected).map(c => c.id));
+
+      newCompanies.forEach(company => {
+        if (selectedIds.has(company.id)) {
+          company.selected = true;
+        }
+      });
+
       if (newCompanies.length > state.displayedCompanies.length) {
         state.displayedCompanies = newCompanies;
         state.page = nextPage;
