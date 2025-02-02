@@ -1,2 +1,2 @@
 export * from './use-company-form';
-export * from './use-delete-company-dialog';
+export * from './use-delete-companies';

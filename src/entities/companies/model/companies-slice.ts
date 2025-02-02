@@ -29,11 +29,20 @@ export const companiesSlice = createSlice({
       });
     },
     deleteCompanies(state, action: PayloadAction<string[]>) {
+      const selectedIds = new Set(state.displayedCompanies.filter(c => c.selected).map(c => c.id));
+
       state.companies = state.companies.filter(company => !action.payload.includes(company.id));
       state.displayedCompanies = state.displayedCompanies.filter(company => !action.payload.includes(company.id));
+
       if (state.displayedCompanies.length < 15) {
-        state.displayedCompanies = state.companies;
+        state.displayedCompanies = state.companies.slice(0, 15);
       }
+
+      state.displayedCompanies.forEach(company => {
+        if (selectedIds.has(company.id)) {
+          company.selected = true;
+        }
+      });
     },
     updateCompany(state, action: PayloadAction<{ id: string; name: string; address: Location }>) {
       const company = state.companies.find(c => c.id === action.payload.id);

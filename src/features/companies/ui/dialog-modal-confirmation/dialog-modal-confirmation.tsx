@@ -1,4 +1,4 @@
-import { Button, DialogModal } from '@/shared';
+import { Button, DialogModal, getCompanyDeclension } from '@/shared';
 import s from './dialog-modal-confirmation.module.scss';
 
 type Props = {
@@ -20,7 +20,10 @@ export const DialogModalConfirmation = ({ isOpen, onClose, dialogTitle, titleCom
         )}
         {totalCompanies && (
           <span className={s.text}>
-            Удалить выбранные компании в количестве <strong>{totalCompanies}?</strong>
+            Выбрано для удаления{' '}
+            <strong>
+              {totalCompanies} {getCompanyDeclension(totalCompanies)}.
+            </strong>
           </span>
         )}
         <div className={s.buttonWrapper}>

@@ -1,18 +1,19 @@
-.modalContent{
-display: flex;
+.modalContent {
+  display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   align-items: flex-start;
 
+  min-width: 430px;
   padding: 30px 20px;
 
-  .text{
+  .text {
     font-size: var(--font-size-xl);
     color: var(--color-light-700);
   }
 }
 
-.buttonWrapper{
+.buttonWrapper {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -20,15 +21,15 @@ display: flex;
 
   width: 100%;
 
-  .btnYes, .btnNo{
+  .btnYes, .btnNo {
     width: 100px;
   }
 
-  .btnYes{
+  .btnYes {
     color: var(--color-accent-900);
   }
 
-  .btnNo{
+  .btnNo {
     color: var(--color-danger-700);
   }
 }
