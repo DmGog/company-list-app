@@ -1,0 +1,27 @@
+.tableHead {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+
+  & th {
+    text-align: start;
+  }
+
+  & th:nth-child(1) {
+    width: 110px;
+  }
+
+  & th:nth-child(2) {
+    width: 280px;
+  }
+
+  & th:last-child {
+    text-align: end;
+  }
+}
+
+
+.actionHeadCell {
+  display: flex;
+  gap: 4px;
+}

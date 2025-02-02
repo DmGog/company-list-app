@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { companiesData } from '../mock-data-companies';
 import { CompaniesState, Company, Location } from './types';
 
+const COMPANIES_PER_PAGE = 15;
+
 const initialState: CompaniesState = {
   companies: companiesData,
-  displayedCompanies: companiesData.slice(0, 15),
+  displayedCompanies: companiesData.slice(0, COMPANIES_PER_PAGE),
   page: 1,
   isEditingGlobal: false,
 };
@@ -15,7 +17,7 @@ export const companiesSlice = createSlice({
   reducers: {
     addCompany(state, action: PayloadAction<Company>) {
       state.companies.push(action.payload);
-      state.displayedCompanies = state.companies.slice(0, state.page * 15);
+      state.displayedCompanies = state.companies.slice(0, state.page * COMPANIES_PER_PAGE);
     },
     toggleSelectCompany(state, action: PayloadAction<string>) {
       const company = state.displayedCompanies.find(c => c.id === action.payload);
@@ -34,8 +36,8 @@ export const companiesSlice = createSlice({
       state.companies = state.companies.filter(company => !action.payload.includes(company.id));
       state.displayedCompanies = state.displayedCompanies.filter(company => !action.payload.includes(company.id));
 
-      if (state.displayedCompanies.length < 15) {
-        state.displayedCompanies = state.companies.slice(0, 15);
+      if (state.displayedCompanies.length < COMPANIES_PER_PAGE) {
+        state.displayedCompanies = state.companies.slice(0, COMPANIES_PER_PAGE);
       }
 
       state.displayedCompanies.forEach(company => {
@@ -58,7 +60,7 @@ export const companiesSlice = createSlice({
     },
     loadMoreCompanies(state) {
       const nextPage = state.page + 1;
-      const newCompanies = state.companies.slice(0, nextPage * 15);
+      const newCompanies = state.companies.slice(0, nextPage * COMPANIES_PER_PAGE);
 
       const selectedIds = new Set(state.displayedCompanies.filter(c => c.selected).map(c => c.id));
 

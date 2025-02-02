@@ -1,13 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useAppSelector } from '@/app/store';
-import { Button, Checkbox, Table, TableBody, TableHead, TableHeadCell, TableRow } from '@/shared';
-import { toggleSelectAll, loadMoreCompanies } from '@/entities';
+import { Table, TableBody } from '@/shared';
+import { loadMoreCompanies, toggleSelectAll } from '@/entities';
 
 import { CompanyRow } from './company-row';
 import { useDeleteCompanies } from '@/features/companies/hooks';
 import clsx from 'clsx';
 import s from './companies-table.module.scss';
 import { DialogModalConfirmation } from '@/features';
+import { CompaniesTableHeader } from './companies-table-head';
+
+const SCROLL_THRESHOLD = 10;
 
 export const CompaniesTable = () => {
   const { displayedCompanies, isEditingGlobal, companies } = useAppSelector(state => state.companies);
@@ -19,7 +22,7 @@ export const CompaniesTable = () => {
   const handleScroll = () => {
     if (tableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = tableRef.current;
-      if (scrollTop + clientHeight >= scrollHeight - 10) {
+      if (scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD) {
         dispatch(loadMoreCompanies());
       }
     }
@@ -36,25 +39,14 @@ export const CompaniesTable = () => {
   return (
     <div className={s.companiesTable}>
       <Table>
-        <TableHead className={s.tableHead}>
-          <TableRow>
-            <TableHeadCell className={s.headCell}>
-              <div className={s.actionHeadCell}>
-                <Checkbox
-                  checked={allSelected}
-                  onCheckedChange={() => dispatch(toggleSelectAll(!allSelected))}
-                  disabled={isEditingGlobal || displayedCompanies.length < 1}
-                />
-                {selectedCompanies.length > 0 && (
-                  <Button iconVariant="delete" onlyIcon onClick={openDeleteModalForSelected} disabled={isEditingGlobal} />
-                )}
-              </div>
-            </TableHeadCell>
-            <TableHeadCell>Название компании</TableHeadCell>
-            <TableHeadCell>Адрес компании</TableHeadCell>
-            <TableHeadCell>Количество компаний: {companies.length}</TableHeadCell>
-          </TableRow>
-        </TableHead>
+        <CompaniesTableHeader
+          allSelected={allSelected}
+          selectedCompaniesCount={selectedCompanies.length}
+          onToggleSelectAll={() => dispatch(toggleSelectAll(!allSelected))}
+          onDeleteSelected={openDeleteModalForSelected}
+          isEditingGlobal={isEditingGlobal}
+          totalCompanies={companies.length}
+        />
       </Table>
       <div className={clsx(s.tableBody, isEditingGlobal && s.noScroll)} ref={tableRef} onScroll={handleScroll}>
         <Table>

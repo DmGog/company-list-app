@@ -4,39 +4,6 @@
   max-height: 80vh;
 }
 
-.tableHead {
-  position: sticky;
-  z-index: 10;
-  top: 0;
-
-  & th {
-    text-align: start;
-  }
-
-  & th:nth-child(2) {
-    width: 280px;
-  }
-
-  & th:last-child {
-    text-align: end;
-  }
-}
-
-.headCell {
-  width: 110px;
-}
-
-.actionHeadCell {
-  display: flex;
-  gap: 4px;
-}
-
-.btnWrapperHeadCell {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-
 .tableBody {
   overflow-y: auto;
   flex: 1;
