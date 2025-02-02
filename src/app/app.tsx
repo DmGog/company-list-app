@@ -1,23 +1,20 @@
 import './app.module.scss';
 import { AddCompanyForm, CompaniesTable } from '@/features';
 import s from './app.module.scss';
-import { Button } from '@/shared';
 import { useState } from 'react';
 import { useAppSelector } from '@/app/store';
+import { CompanyHeader } from '@/widgets';
 
 function App() {
-  const [addShowModal, setAddShowModal] = useState<boolean>(false);
   const isEditing = useAppSelector(state => state.companies.isEditingGlobal);
+  const [addShowModal, setAddShowModal] = useState<boolean>(false);
   const handleAddShowModal = () => {
-    setAddShowModal(!addShowModal);
+    setAddShowModal(prev => !prev);
   };
 
   return (
     <section className={s.section}>
-      <div className={s.headerWrapper}>
-        <h2 className={s.title}>Список компаний</h2>
-        <Button onClick={handleAddShowModal} title="+ Добавить компанию" variant="outlined" className={s.addButton} disabled={isEditing} />
-      </div>
+      <CompanyHeader onAddCompany={handleAddShowModal} isEditing={isEditing} />
       <CompaniesTable />
       <AddCompanyForm isOpen={addShowModal} onClose={handleAddShowModal} />
     </section>
