@@ -5,17 +5,13 @@
 }
 
 .headCell {
-  padding: 8px 12px;
-  font-size: var(--font-size-l);
-  font-weight: var(--font-weight-medium);
-  background-color: var(--color-dark-500);
+  padding: 10px 12px;
 
-  > span {
-    user-select: none;
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent-100);
+
+  background-color: var(--color-dark-500);
 }
 
 .tableRow {

@@ -85,7 +85,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
 
   return (
     <TableRow key={company.id} className={classNames.rowBody}>
-      <TableCell>
+      <TableCell className={s.checkboxCell}>
         <Checkbox checked={company.selected} onCheckedChange={handleSelectCompany(company.id)} disabled={disabled && !isEditing} />
       </TableCell>
       <TableCell>

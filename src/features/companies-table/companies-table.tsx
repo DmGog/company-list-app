@@ -7,12 +7,12 @@ import { CompanyRow } from './company-row';
 import clsx from 'clsx';
 
 export const CompaniesTable = () => {
-  const { displayedCompanies, isEditingGlobal } = useAppSelector(state => state.companies);
+  const { displayedCompanies, isEditingGlobal, companies } = useAppSelector(state => state.companies);
   const dispatch = useAppDispatch();
   const tableRef = useRef<HTMLDivElement | null>(null);
   const selectedCompanies = displayedCompanies.filter(company => company.selected);
   const allSelected = selectedCompanies.length === displayedCompanies.length && displayedCompanies.length > 0;
-  console.log(displayedCompanies);
+
   const handleSelectAll = () => {
     dispatch(toggleSelectAll(!allSelected));
   };
@@ -41,6 +41,10 @@ export const CompaniesTable = () => {
     }
   }, []);
 
+  const classNames = {
+    tableBody: clsx(s.tableBody, isEditingGlobal && s.noScroll),
+  };
+
   return (
     <div className={s.companiesTable}>
       <Table>
@@ -60,11 +64,11 @@ export const CompaniesTable = () => {
             </TableHeadCell>
             <TableHeadCell>Название компании</TableHeadCell>
             <TableHeadCell>Адрес компании</TableHeadCell>
-            <TableHeadCell></TableHeadCell>
+            <TableHeadCell>Количество компаний: {companies.length}</TableHeadCell>
           </TableRow>
         </TableHead>
       </Table>
-      <div className={clsx(s.tableBody, isEditingGlobal && s.noScroll)} ref={tableRef} onScroll={handleScroll}>
+      <div className={classNames.tableBody} ref={tableRef} onScroll={handleScroll}>
         <Table>
           <TableBody>
             {displayedCompanies.map(company => (

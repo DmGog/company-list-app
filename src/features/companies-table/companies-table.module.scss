@@ -1,5 +1,5 @@
-.companiesTable{
- display: flex;
+.companiesTable {
+  display: flex;
   flex-direction: column;
   max-height: 80vh;
 }
@@ -8,6 +8,18 @@
   position: sticky;
   z-index: 10;
   top: 0;
+
+  & th {
+    text-align: start;
+  }
+
+  & th:nth-child(2) {
+    width: 280px;
+  }
+
+  & th:last-child {
+    text-align: end;
+  }
 }
 
 .headCell {
@@ -30,7 +42,7 @@
   flex: 1;
 }
 
-.noScroll{
+.noScroll {
   overflow: hidden;
 }
 

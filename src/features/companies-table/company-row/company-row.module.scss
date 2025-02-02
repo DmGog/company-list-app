@@ -1,4 +1,8 @@
 .rowBody {
+  & td:nth-child(2) {
+    width: 280px;
+  }
+
   &.selected {
     background-color: var(--color-light-900);
   }
@@ -15,6 +19,10 @@
     background-color: var(--color-accent-900);
   }
 
+}
+
+.checkboxCell {
+  width: 110px;
 }
 
 .error {

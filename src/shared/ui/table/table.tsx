@@ -34,7 +34,7 @@ export const TableHeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutR
   };
   return (
     <th className={classNames.headCell} {...rest} ref={ref}>
-      <span>{children}</span>
+      {children}
     </th>
   );
 });
