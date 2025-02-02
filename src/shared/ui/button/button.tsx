@@ -25,7 +25,6 @@ type Props = {
   disabled?: boolean;
   className?: string;
 };
-s;
 export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', title, disabled, className }: Props) => {
   const classNames = {
     button: clsx(s.button, s[variant], disabled && s.disabled, className),

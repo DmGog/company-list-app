@@ -29,33 +29,32 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    animation: slideUpAndFade 1000ms forwards;
+    animation: slide-up-and-fade 1000ms forwards;
   }
 
   &.bottom {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    animation: slideDownAndFade 1000ms forwards;
+    animation: slide-down-and-fade 1000ms forwards;
   }
 
   &.left {
     top: 50%;
     right: 100%;
     transform: translateY(-50%);
-    animation: slideLeftAndFade 1000ms forwards;
+    animation: slide-left-and-fade 1000ms forwards;
   }
 
   &.right {
     top: 50%;
     left: 100%;
     transform: translateY(-50%);
-    animation: slideRightAndFade 1000ms forwards;
+    animation: slide-right-and-fade 1000ms forwards;
   }
 }
 
-
-@keyframes slideUpAndFade {
+@keyframes slide-up-and-fade {
   from {
     transform: translateY(2px);
     opacity: 0;
@@ -67,7 +66,7 @@
   }
 }
 
-@keyframes slideDownAndFade {
+@keyframes slide-down-and-fade {
   from {
     transform: translateY(-2px);
     opacity: 0;
@@ -79,7 +78,7 @@
   }
 }
 
-@keyframes slideLeftAndFade {
+@keyframes slide-left-and-fade {
   from {
     transform: translateX(-2px);
     opacity: 0;
@@ -91,7 +90,7 @@
   }
 }
 
-@keyframes slideRightAndFade {
+@keyframes slide-right-and-fade {
   from {
     transform: translateX(2px);
     opacity: 0;
