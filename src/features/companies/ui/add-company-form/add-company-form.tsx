@@ -64,7 +64,6 @@ export const AddCompanyForm = ({ isOpen, onClose }: Props) => {
           value={form.name}
           onChange={e => handleChange('name', e.target.value)}
           onKeyDown={e => handleKeyDown(e, 0)}
-          placeholder="Название компании"
           name="name"
         />
         <h3 className={s.secondaryTitle}>Адрес компании</h3>

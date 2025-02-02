@@ -5,7 +5,7 @@ import clsx from 'clsx';
 type Props = {
   name: string;
   value: string;
-  placeholder: string;
+  placeholder?: string;
   error?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
