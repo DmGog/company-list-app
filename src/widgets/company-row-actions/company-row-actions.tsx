@@ -1,5 +1,6 @@
 import s from './company-row-actions.module.scss';
 import { Button } from '@/shared';
+import { memo } from 'react';
 
 type Props = {
   isEditing: boolean;
@@ -10,7 +11,7 @@ type Props = {
   onEdit: () => void;
 };
 
-export const CompanyRowActions = ({ isEditing, disabled, onSaveEdit, onCancelEdit, onDelete, onEdit }: Props) => {
+export const CompanyRowActions = memo(({ isEditing, disabled, onSaveEdit, onCancelEdit, onDelete, onEdit }: Props) => {
   return (
     <div className={s.companyRowActions}>
       {isEditing ? (
@@ -26,4 +27,5 @@ export const CompanyRowActions = ({ isEditing, disabled, onSaveEdit, onCancelEdi
       )}
     </div>
   );
-};
+});
+CompanyRowActions.displayName = 'CompanyRowActions';

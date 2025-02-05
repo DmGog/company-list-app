@@ -1,32 +1,32 @@
-import { useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { useAppSelector } from '@/app/store';
 import { Table, TableBody } from '@/shared';
 import { loadMoreCompanies, toggleSelectAll } from '@/entities';
 
 import { CompanyRow } from './company-row';
-import { useDeleteCompanies } from '@/features/companies/hooks';
+import { useDeleteCompanies } from '../../hooks';
 import clsx from 'clsx';
 import s from './companies-table.module.scss';
-import { DialogModalConfirmation } from '@/features';
 import { CompaniesTableHeader } from './companies-table-head';
+import { DialogModalConfirmation } from '@/widgets';
 
 const SCROLL_THRESHOLD = 10;
 
-export const CompaniesTable = () => {
+export const CompaniesTable = memo(() => {
   const { displayedCompanies, isEditingGlobal, companies } = useAppSelector(state => state.companies);
   const tableRef = useRef<HTMLDivElement | null>(null);
   const selectedCompanies = displayedCompanies.filter(company => company.selected);
   const allSelected = selectedCompanies.length === displayedCompanies.length && displayedCompanies.length > 0;
   const { isModalOpen, dispatch, modalData, openDeleteModalForSelected, confirmDelete, closeDeleteModal } = useDeleteCompanies();
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (tableRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = tableRef.current;
       if (scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD) {
         dispatch(loadMoreCompanies());
       }
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const tableElement = tableRef.current;
@@ -69,4 +69,6 @@ export const CompaniesTable = () => {
       )}
     </div>
   );
-};
+});
+
+CompaniesTable.displayName = 'CompaniesTable';

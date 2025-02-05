@@ -2,10 +2,9 @@ import clsx from 'clsx';
 import { Checkbox, FormInput, TableCell, TableRow } from '@/shared';
 import { Company, toggleEditing, toggleSelectCompany, updateCompany } from '@/entities';
 import s from './company-row.module.scss';
-import { useEffect, useState } from 'react';
-import { CompanyRowActions } from '@/widgets';
-import { useCompanyForm, useDeleteCompanies } from '@/features/companies/hooks';
-import { DialogModalConfirmation } from '@/features';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { CompanyRowActions, DialogModalConfirmation } from '@/widgets';
+import { useCompanyForm, useDeleteCompanies } from '../../../hooks';
 
 type AddressKey = 'country' | 'city' | 'street' | 'houseNumber';
 
@@ -14,7 +13,7 @@ type Props = {
   disabled: boolean;
 };
 
-export const CompanyRow = ({ company, disabled }: Props) => {
+export const CompanyRow = memo(({ company, disabled }: Props) => {
   const { formFields, dispatch, handleKeyDown, inputRefs, form, errors, validateForm, handleChange, resetForm } = useCompanyForm();
   const { isModalOpen, modalData, openDeleteModalForCompany, confirmDelete, closeDeleteModal } = useDeleteCompanies();
   const [editingCompanyId, setEditingCompanyId] = useState<string | null>(null);
@@ -44,7 +43,7 @@ export const CompanyRow = ({ company, disabled }: Props) => {
     });
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = useCallback(() => {
     if (validateForm()) {
       dispatch(
         updateCompany({
@@ -62,17 +61,20 @@ export const CompanyRow = ({ company, disabled }: Props) => {
       dispatch(toggleEditing(false));
       resetForm();
     }
-  };
+  }, [dispatch, editingCompanyId, form, validateForm, resetForm]);
 
-  const handleCancelEdit = () => {
+  const handleCancelEdit = useCallback(() => {
     setEditingCompanyId(null);
     dispatch(toggleEditing(false));
     resetForm();
-  };
+  }, [dispatch, resetForm]);
 
-  const handleSelectCompany = (id: string) => () => {
-    dispatch(toggleSelectCompany(id));
-  };
+  const handleSelectCompany = useCallback(
+    (id: string) => () => {
+      dispatch(toggleSelectCompany(id));
+    },
+    [dispatch],
+  );
 
   const isEditing = editingCompanyId === company.id;
 
@@ -144,4 +146,6 @@ export const CompanyRow = ({ company, disabled }: Props) => {
       )}
     </>
   );
-};
+});
+
+CompanyRow.displayName = 'CompanyRow';

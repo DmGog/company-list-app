@@ -1,4 +1,4 @@
-import { KeyboardEvent, useRef, useState } from 'react';
+import { KeyboardEvent, useCallback, useRef, useState } from 'react';
 import { useAppDispatch } from '@/app/store';
 
 type FormState = Record<string, string>;
@@ -23,23 +23,23 @@ export const useCompanyForm = () => {
   const inputRefs = useRef<Array<HTMLInputElement | null>>(Array(formFields.length).fill(null));
   const dispatch = useAppDispatch();
 
-  const validateForm = (): boolean => {
+  const validateForm = useCallback((): boolean => {
     const newErrors = Object.fromEntries(Object.entries(form).map(([key, value]) => [key, value.trim() ? '' : 'Заполните поле']));
     setErrors(newErrors);
     return !Object.values(newErrors).some(Boolean);
-  };
+  }, [form]);
 
-  const handleChange = (name: string, value: string) => {
+  const handleChange = useCallback((name: string, value: string) => {
     setForm(prev => ({ ...prev, [name]: value }));
     setErrors(prev => ({ ...prev, [name]: value.trim() ? '' : prev[name] }));
-  };
+  }, []);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setForm(Object.fromEntries(formFields.map(field => [field.name, ''])));
     setErrors({});
-  };
+  }, []);
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>, index: number) => {
+  const handleKeyDown = useCallback((e: KeyboardEvent<HTMLInputElement>, index: number) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       const nextInput = inputRefs.current[index + 1];
@@ -47,6 +47,6 @@ export const useCompanyForm = () => {
         nextInput.focus();
       }
     }
-  };
+  }, []);
   return { form, errors, validateForm, handleChange, resetForm, inputRefs, formFields, dispatch, handleKeyDown };
 };

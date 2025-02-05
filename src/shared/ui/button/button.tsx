@@ -32,7 +32,6 @@ export const Button = ({ iconVariant, onClick, onlyIcon, variant = 'outlined', t
   };
 
   const ariaLabel = onlyIcon && iconVariant ? getAriaLabel(iconVariant) : undefined;
-
   return (
     <button
       className={clsx(classNames.button, classNames.icon)}

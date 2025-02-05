@@ -1,12 +1,13 @@
 import { Button } from '@/shared';
 import s from './company-header.module.scss';
+import { memo } from 'react';
 
 type Props = {
   onAddCompany: () => void;
   isEditing: boolean;
 };
 
-export const CompanyHeader = ({ onAddCompany, isEditing }: Props) => {
+export const CompanyHeader = memo(({ onAddCompany, isEditing }: Props) => {
   return (
     <div className={s.headerWrapper}>
       <h2 className={s.title}>Список компаний</h2>
@@ -20,4 +21,6 @@ export const CompanyHeader = ({ onAddCompany, isEditing }: Props) => {
       />
     </div>
   );
-};
+});
+
+CompanyHeader.displayName = 'CompanyHeader';
